@@ -321,7 +321,7 @@
         const subMenuItemsWrapper = document.querySelector("[data-submenu-spollers]");
         if (subMenuItemsWrapper) {
             const parameters = subMenuItemsWrapper.getAttribute("data-submenu-spollers").split(",");
-            const maxWidth = parameters[0] ? parameters[0] : 991.98;
+            const maxWidth = parameters[0] ? Number(parameters[0]) + 1 : 991.98;
             const speedSlide = parameters[1] ? parameters[1] : 400;
             const isPopperJs = subMenuItemsWrapper.hasAttribute("data-is-popperjs");
             const subMenuItems = subMenuItemsWrapper.querySelectorAll("[data-submenu-spoller]");
@@ -393,19 +393,6 @@
                 subMenuItems.forEach((item => item.classList.remove("_open")));
             }
         }
-    }
-    function navigateToLocationPoint() {
-        const btns = document.querySelectorAll("[data-navigate-to]");
-        if (btns.length) btns.forEach((btn => {
-            btn.addEventListener("click", (function(e) {
-                e.preventDefault();
-                const params = btn.getAttribute("data-navigate-to").split(",");
-                const latitude = params[0];
-                const longitude = params[1];
-                const url = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(latitude + "," + longitude);
-                window.open(url, "_blank");
-            }));
-        }));
     }
     function getWindow_getWindow(node) {
         if (node == null) return window;
@@ -1641,7 +1628,6 @@
     positionSubMenu();
     window.addEventListener("initPopperPosition", positionSubMenu);
     showHideSubMenu();
-    navigateToLocationPoint();
     isWebp();
     addLoadedClass();
     menuInit();
@@ -5147,8 +5133,6 @@
             if (slider) {
                 new Swiper(slider, {
                     modules: [ Pagination ],
-                    slidesPerView: 3,
-                    spaceBetween: 32,
                     speed: 800,
                     lazy: true,
                     pagination: {
@@ -5164,7 +5148,8 @@
                             spaceBetween: 25
                         },
                         1100: {
-                            slidesPerView: 3
+                            slidesPerView: 3,
+                            spaceBetween: 32
                         }
                     },
                     on: {}
@@ -5191,6 +5176,7 @@
                 modules: [ Navigation, Pagination ],
                 slidesPerView: 4,
                 spaceBetween: 40,
+                slidesPerGroup: 2,
                 speed: 800,
                 lazy: true,
                 navigation: {
@@ -5203,6 +5189,7 @@
                 breakpoints: {
                     0: {
                         slidesPerView: 1.6,
+                        slidesPerGroup: 1,
                         spaceBetween: 40
                     },
                     479.98: {
@@ -5227,8 +5214,9 @@
         if (sliderBlock) {
             const slider = sliderBlock.querySelector(`[data-slider]`);
             const sliderPagination = sliderBlock.querySelector("[data-slider-pagination]");
+            const btnNext = sliderBlock.querySelector("[data-slider-nextbtn]");
             if (slider) new Swiper(slider, {
-                modules: [ Pagination ],
+                modules: [ Navigation, Pagination ],
                 slidesPerView: 3,
                 spaceBetween: 32,
                 speed: 800,
@@ -5237,13 +5225,17 @@
                     el: sliderPagination,
                     clickable: true
                 },
+                navigation: {
+                    nextEl: btnNext
+                },
                 breakpoints: {
                     0: {
-                        slidesPerView: 1
+                        slidesPerView: 1.09,
+                        spaceBetween: 8
                     },
-                    550: {
+                    580: {
                         slidesPerView: 2,
-                        spaceBetween: 25
+                        spaceBetween: 20
                     },
                     992: {
                         slidesPerView: 3

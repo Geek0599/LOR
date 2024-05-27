@@ -197,7 +197,7 @@
         const subMenuItemsWrapper = document.querySelector("[data-submenu-spollers]");
         if (subMenuItemsWrapper) {
             const parameters = subMenuItemsWrapper.getAttribute("data-submenu-spollers").split(",");
-            const maxWidth = parameters[0] ? parameters[0] : 991.98;
+            const maxWidth = parameters[0] ? Number(parameters[0]) + 1 : 991.98;
             const speedSlide = parameters[1] ? parameters[1] : 400;
             const isPopperJs = subMenuItemsWrapper.hasAttribute("data-is-popperjs");
             const subMenuItems = subMenuItemsWrapper.querySelectorAll("[data-submenu-spoller]");
@@ -269,19 +269,6 @@
                 subMenuItems.forEach((item => item.classList.remove("_open")));
             }
         }
-    }
-    function navigateToLocationPoint() {
-        const btns = document.querySelectorAll("[data-navigate-to]");
-        if (btns.length) btns.forEach((btn => {
-            btn.addEventListener("click", (function(e) {
-                e.preventDefault();
-                const params = btn.getAttribute("data-navigate-to").split(",");
-                const latitude = params[0];
-                const longitude = params[1];
-                const url = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(latitude + "," + longitude);
-                window.open(url, "_blank");
-            }));
-        }));
     }
     function getWindow(node) {
         if (node == null) return window;
@@ -1517,7 +1504,6 @@
     positionSubMenu();
     window.addEventListener("initPopperPosition", positionSubMenu);
     showHideSubMenu();
-    navigateToLocationPoint();
     isWebp();
     addLoadedClass();
     menuInit();
